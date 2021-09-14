@@ -1,10 +1,19 @@
-import React from "react";
+import React, { Fragment } from "react";
+import MainHeading from "../src/components/Heading";
+import "./App.css";
+import Container from "@material-ui/core/Container";
+import Navbar from "./components/Navbar";
+import DocumentForm from "./components/DocumentForm";
 
 const App = () => {
   return (
-    <div>
-      test
-    </div>
+    <Fragment>
+      <Navbar />
+      <Container>
+        <MainHeading />
+        <DocumentForm />
+      </Container>
+    </Fragment>
   );
 };
 
