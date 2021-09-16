@@ -4,7 +4,7 @@ import "./App.css";
 import Container from "@material-ui/core/Container";
 import Navbar from "./components/Navbar";
 import PurchaseOrderForm from "./components/PurchaseOrderForm";
-import "devextreme/dist/css/dx.material.blue.dark.css";
+import "devextreme/dist/css/dx.material.blue.light.css";
 import ItemsGrid from "../src/components/ItemsGrid";
 
 const App = () => {

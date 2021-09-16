@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import "devextreme/dist/css/dx.material.blue.dark.css";
+// import "devextreme/dist/css/dx.material.blue.dark.css";
 import { connect } from "react-redux";
 import {
   Form,
@@ -12,6 +12,8 @@ import {
 } from "devextreme-react/form";
 import { addFormData } from "../reducers/actions/index";
 import { v4 as uuidv4 } from "uuid";
+// import themes from "devextreme/ui/themes";
+import { useStyles } from "../styles/purchaseOrderStyles";
 
 //validate form data
 const validationRules = {
@@ -37,17 +39,17 @@ const mapDispatchToProps = (dispatch) => {
 //Form Component
 const PurchaseOrderForm = ({ dropDownOptions, addFormData }) => {
   const testForm = useRef();
+  const classes = useStyles();
   const validateForm = (e) => {
     e.component.validate();
   };
   //store form submit data
-  const [formSubmitData, setFormSubmitData] = useState(""); //FIXME: take a look here tommorow
+  const [formSubmitData, setFormSubmitData] = useState("");
   const submitButtonOptions = {
     text: "Submit Form",
     useSubmitBehavior: true,
   };
 
-  //can use useRef as well to get user input , and make this a controlled input
   //get user input from form
   const formFeildDataChange = (e) => {
     setFormSubmitData(e.component.option("formData"));
@@ -57,9 +59,7 @@ const PurchaseOrderForm = ({ dropDownOptions, addFormData }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formID = uuidv4();
-
-    console.log(formSubmitData);
-
+    //dispatch form data to redux store
     addFormData({
       orderID: formID,
       customer: formSubmitData.Customer,
@@ -73,17 +73,13 @@ const PurchaseOrderForm = ({ dropDownOptions, addFormData }) => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        backgroundColor: "dx.material.purple.light.css",
-      }}>
+    <div className={classes.container}>
       <form onSubmit={handleSubmit}>
         <Form
           onContentReady={validateForm}
           onFieldDataChanged={formFeildDataChange}
-          ref={testForm}>
+          ref={testForm}
+          className={classes.purchaseForm}>
           <GroupItem caption="Purchase Form">
             <TabbedItem>
               <TabPanelOptions height="400" width="900" />

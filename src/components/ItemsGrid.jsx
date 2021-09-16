@@ -1,29 +1,5 @@
-// import React from "react";
 import { connect } from "react-redux";
-// import "devextreme/dist/css/dx.light.css";
-
-// import { DataGrid } from "devextreme-react/data-grid";
-// // import { employees } from "./employees";
-
-// //access store data
-// const mapStateToProps = (state) => {
-//   return { invoiceData: state.formSubmitData };
-// };
-
-// function ItemsGrid({ invoiceData }) {
-//   return (
-//     <div>
-//       <DataGrid dataSource={invoiceData.formData} keyExpr="orderID"></DataGrid>
-//       <button onClick={() => console.log(invoiceData)}>Data grid</button>
-//     </div>
-//   );
-// }
-
-// const ItemsDataForm = connect(mapStateToProps)(ItemsGrid);
-
-// export default ItemsDataForm;
 import React from "react";
-// import { orders } from "./data.js";
 import DataGrid, {
   FilterRow,
   HeaderFilter,
@@ -38,6 +14,7 @@ const mapStateToProps = (state) => {
 function ItemsGrid({ invoiceData }) {
   return (
     <div>
+      <h1 style={{ textAlign: "center" }}>Data Grid</h1>
       <DataGrid
         id="gridContainer"
         columnsAutoWidth="true"
