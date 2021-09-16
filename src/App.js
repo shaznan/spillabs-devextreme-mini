@@ -3,7 +3,9 @@ import MainHeading from "../src/components/Heading";
 import "./App.css";
 import Container from "@material-ui/core/Container";
 import Navbar from "./components/Navbar";
-import DocumentForm from "./components/DocumentForm";
+import PurchaseOrderForm from "./components/PurchaseOrderForm";
+import "devextreme/dist/css/dx.material.blue.dark.css";
+import ItemsGrid from "../src/components/ItemsGrid";
 
 const App = () => {
   return (
@@ -11,7 +13,8 @@ const App = () => {
       <Navbar />
       <Container>
         <MainHeading />
-        <DocumentForm />
+        <PurchaseOrderForm />
+        <ItemsGrid />
       </Container>
     </Fragment>
   );

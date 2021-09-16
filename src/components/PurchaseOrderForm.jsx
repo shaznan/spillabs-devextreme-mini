@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import "devextreme/dist/css/dx.light.css";
-
+import React, { useState, useRef } from "react";
+import "devextreme/dist/css/dx.material.blue.dark.css";
+import { connect } from "react-redux";
 import {
   Form,
   SimpleItem,
@@ -10,46 +10,80 @@ import {
   TabPanelOptions,
   ButtonItem,
 } from "devextreme-react/form";
+import { addFormData } from "../reducers/actions/index";
+import { v4 as uuidv4 } from "uuid";
 
-//FIXME: store in useContext API
-const orderForOptions = ["Individual", "SME", "Large Enterprise"];
-const deliveryOptions = ["Delivery", "Pick-up"];
-const salesOrder = ["Invoice 1", "Invoice 2", "Invoice 3"];
-const customerOptions = ["Shaznan", "Nuwan", "Siraj", "Malinda"];
-const adminOptions = ["Admin 1", "Admin 2", "Admin 3"];
-
+//validate form data
 const validationRules = {
   Purchase_Order_Number: [
     { type: "required", message: "Purchase Order is Required" },
   ],
 };
 
-const DocumentForm = () => {
+//access store data
+const mapStateToProps = (state) => {
+  return { dropDownOptions: state.dropdown };
+};
+
+//dispatch store actions
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addFormData: (formData) => {
+      dispatch(addFormData(formData));
+    },
+  };
+};
+
+//Form Component
+const PurchaseOrderForm = ({ dropDownOptions, addFormData }) => {
+  const testForm = useRef();
   const validateForm = (e) => {
     e.component.validate();
   };
-
-  const [formData, setFormData] = useState("");
+  //store form submit data
+  const [formSubmitData, setFormSubmitData] = useState(""); //FIXME: take a look here tommorow
   const submitButtonOptions = {
-    text: "Submit the Form",
+    text: "Submit Form",
     useSubmitBehavior: true,
   };
 
+  //can use useRef as well to get user input , and make this a controlled input
+  //get user input from form
   const formFeildDataChange = (e) => {
-    setFormData(e.component.option("formData"));
+    setFormSubmitData(e.component.option("formData"));
   };
 
+  //handleformsubmit
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    const formID = uuidv4();
+
+    console.log(formSubmitData);
+
+    addFormData({
+      orderID: formID,
+      customer: formSubmitData.Customer,
+      purchaseOrder: formSubmitData.Purchase_Order_Number,
+      goodsOrderReceived: formSubmitData.Goods_Received_Note_No,
+      delivery: formSubmitData.Delivery_Method,
+      order: formSubmitData.Order_For,
+      salesOrder: formSubmitData.Sales_Order,
+      externalOrderNo: formSubmitData.External_Order_Number,
+    });
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        backgroundColor: "dx.material.purple.light.css",
+      }}>
       <form onSubmit={handleSubmit}>
         <Form
           onContentReady={validateForm}
-          onFieldDataChanged={formFeildDataChange}>
+          onFieldDataChanged={formFeildDataChange}
+          ref={testForm}>
           <GroupItem caption="Purchase Form">
             <TabbedItem>
               <TabPanelOptions height="400" width="900" />
@@ -58,31 +92,31 @@ const DocumentForm = () => {
                   dataField="Purchase_Order_Number"
                   validationRules={validationRules.Purchase_Order_Number}
                 />
-                <SimpleItem dataField="Goods Received Note No" />
-                <SimpleItem dataField="External Order Number" />
+                <SimpleItem dataField="Goods_Received_Note_No" />
+                <SimpleItem dataField="External_Order_Number" />
                 <SimpleItem
-                  dataField="Order For"
+                  dataField="Order_For"
                   editorType="dxSelectBox"
                   editorOptions={{
-                    items: orderForOptions,
+                    items: dropDownOptions.orderForOptions,
                     searchEnabled: true,
                     value: "",
                   }}
                 />
                 <SimpleItem
-                  dataField="Delivery Method"
+                  dataField="Delivery_Method"
                   editorType="dxSelectBox"
                   editorOptions={{
-                    items: deliveryOptions,
+                    items: dropDownOptions.deliveryOptions,
                     searchEnabled: true,
                     value: "",
                   }}
                 />
                 <SimpleItem
-                  dataField="Sales Order"
+                  dataField="Sales_Order"
                   editorType="dxSelectBox"
                   editorOptions={{
-                    items: salesOrder,
+                    items: dropDownOptions.salesOrder,
                     searchEnabled: true,
                     value: "",
                   }}
@@ -91,21 +125,21 @@ const DocumentForm = () => {
                   dataField="Customer"
                   editorType="dxSelectBox"
                   editorOptions={{
-                    items: customerOptions,
+                    items: dropDownOptions.customerOptions,
                     searchEnabled: true,
                     value: "",
                   }}
                 />
-                <SimpleItem dataField="PO Date" editorType="dxDateBox" />
-                <SimpleItem dataField="Required Date" editorType="dxDateBox" />
+                <SimpleItem dataField="PO_Date" editorType="dxDateBox" />
+                <SimpleItem dataField="Required_Date" editorType="dxDateBox" />
                 <SimpleItem dataField="Branch" />
                 <SimpleItem dataField="Type" />
-                <SimpleItem dataField="Pick up date" editorType="dxDateBox" />
+                <SimpleItem dataField="Pick_up_date" editorType="dxDateBox" />
                 <SimpleItem
-                  dataField="Requested by Admin"
+                  dataField="Requested_by_Admin"
                   editorType="dxSelectBox"
                   editorOptions={{
-                    items: adminOptions,
+                    items: dropDownOptions.adminOptions,
                     searchEnabled: true,
                     value: "",
                   }}
@@ -130,4 +164,9 @@ const DocumentForm = () => {
   );
 };
 
-export default DocumentForm;
+const purchaseForm = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(PurchaseOrderForm);
+
+export default purchaseForm;
