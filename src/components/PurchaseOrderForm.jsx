@@ -38,7 +38,7 @@ const mapDispatchToProps = (dispatch) => {
 
 //Form Component
 const PurchaseOrderForm = ({ dropDownOptions, addFormData }) => {
-  const testForm = useRef();
+  const ref = useRef();
   const classes = useStyles();
   const validateForm = (e) => {
     e.component.validate();
@@ -74,16 +74,21 @@ const PurchaseOrderForm = ({ dropDownOptions, addFormData }) => {
 
   return (
     <div className={classes.container}>
+      <h1 className={classes.heading}>Purchase Form</h1>
       <form onSubmit={handleSubmit}>
         <Form
           onContentReady={validateForm}
           onFieldDataChanged={formFeildDataChange}
-          ref={testForm}
+          ref={ref}
           className={classes.purchaseForm}>
           <GroupItem caption="Purchase Form">
             <TabbedItem>
-              <TabPanelOptions height="400" width="900" />
-              <Tab title="Document" colCount={2}>
+              <TabPanelOptions height="auto" width="auto" />
+              <Tab
+                title="Document"
+                colCount={2}
+                icon="doc"
+                className={classes.dx_Icon_Customicon}>
                 <SimpleItem
                   dataField="Purchase_Order_Number"
                   validationRules={validationRules.Purchase_Order_Number}
@@ -141,12 +146,12 @@ const PurchaseOrderForm = ({ dropDownOptions, addFormData }) => {
                   }}
                 />
               </Tab>
-              <Tab title="Notifications" colCount={2}>
+              <Tab title="Notifications" colCount={2} icon="more">
                 <SimpleItem dataField="Purchase Order Number" />
                 <SimpleItem dataField="Goods Received Note No" />
                 <SimpleItem dataField="External Order Number" />
               </Tab>
-              <Tab title="Cost calculation Method">
+              <Tab title="Cost calculation Method" icon="formula">
                 <SimpleItem dataField="Purchase Order Number" />
                 <SimpleItem dataField="Goods Received Note No" />
                 <SimpleItem dataField="External Order Number" />

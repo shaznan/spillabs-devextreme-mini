@@ -5,12 +5,15 @@ const useStyles = makeStyles({
     // background: "blue",
     display: "flex",
     justifyContent: "center",
-    padding: "3rem",
+    flexDirection: "column",
   },
   purchaseForm: {
     color: "black !important",
     backgroundColor: "white",
-    padding: "2rem",
+    padding: "2.5rem",
+  },
+  heading: {
+    textAlign: "center",
   },
 });
 

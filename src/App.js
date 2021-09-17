@@ -1,22 +1,33 @@
 import React, { Fragment } from "react";
-import MainHeading from "../src/components/Heading";
 import "./App.css";
 import Container from "@material-ui/core/Container";
 import Navbar from "./components/Navbar";
 import PurchaseOrderForm from "./components/PurchaseOrderForm";
-import "devextreme/dist/css/dx.material.blue.light.css";
+import "devextreme/dist/css/dx.material.blue.light.compact.css";
 import ItemsGrid from "../src/components/ItemsGrid";
+import { Grid } from "@material-ui/core";
+import { useStyles } from "./styles/appStyles";
 
 const App = () => {
+  const classes = useStyles();
   return (
-    <Fragment>
+    <div>
       <Navbar />
       <Container>
-        <MainHeading />
-        <PurchaseOrderForm />
-        <ItemsGrid />
+        <Grid container spacing={4} className={classes.container}>
+          <Grid item sm={12}>
+            <Grid container spacing={4}>
+              <Grid item md={6} sm={12}>
+                <PurchaseOrderForm />
+              </Grid>
+              <Grid item md={6} sm={12}>
+                <ItemsGrid />
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
       </Container>
-    </Fragment>
+    </div>
   );
 };
 

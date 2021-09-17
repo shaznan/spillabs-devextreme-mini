@@ -27,7 +27,7 @@ export default function Navbar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.bar}>
+      <AppBar position="fixed" className={classes.bar}>
         <Toolbar>
           <IconButton
             edge="start"
